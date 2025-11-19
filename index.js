@@ -23,9 +23,16 @@ app.use("/api/videos", videoRoutes);
 app.use("/api/channels", channelRoutes);
 
 // DB connect
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("✅ DB connected");
-    app.listen(8080, () => console.log("🚀 Server running on 8080"));
+mongoose
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/Details")
+  .then(async() => {
+    console.log("✅ MongoDB connected");
+    await PostProducts()
+    app.listen(8080, () => {
+      console.log("🚀 Server running at http://localhost:8080");
+    });
   })
-  .catch(err => console.error("❌ DB Connection Error:", err));
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });
+
