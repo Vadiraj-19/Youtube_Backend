@@ -27,7 +27,6 @@ mongoose
   .connect(process.env.MONGO_URI || "mongodb://localhost:27017/Details")
   .then(async() => {
     console.log("✅ MongoDB connected");
-    await PostProducts()
     app.listen(8080, () => {
       console.log("🚀 Server running at http://localhost:8080");
     });
